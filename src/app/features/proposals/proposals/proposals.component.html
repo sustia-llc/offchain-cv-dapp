@@ -1,0 +1,213 @@
+<div class="background">
+    <div class="gradient">
+      <div class="container" *ngIf="{auth: auth$ | async} as o">
+        <h1>{{ 'aw3s.title.long' | translate }}</h1>
+        <div class="actions" *ngIf="!o.auth.idxConnected">
+          <a mat-raised-button class="actions-main" color="warn" (click)="onLoginClick()" [ngClass]="routeAnimationsElements">
+            {{ 'aw3s.menu.login' | translate }}
+          </a>
+          <br>
+        </div>
+        <div *ngIf="o.auth.idxConnected">
+          <div class="row">
+            <ng-container *ngIf="proposals$ | async as proposals">
+              <div class="col-md-6">
+                <h2 class="proposals-title" rtl>
+                  <span>{{ 'aw3s.proposals.list' | translate }}</span>
+                  <button class="proposals-filter" mat-icon-button [matMenuTriggerFor]="proposalsFilter">
+                    <fa-icon icon="filter"></fa-icon>
+                  </button>
+                  <mat-menu class="proposals-filter-menu-overlay" #proposalsFilter="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="onFilterProposals('ALL')" [class.active]="(filter$ | async) === 'ALL'" rtl>
+                      <mat-icon>
+                        <fa-icon icon="tasks"></fa-icon>
+                      </mat-icon>
+                      <span>{{ 'aw3s.proposals.filter.all' | translate }}</span>
+                    </button>
+                    <button mat-menu-item (click)="onFilterProposals('EXECUTED')" [class.active]="(filter$ | async) === 'DONE'">
+                      <mat-icon>
+                        <fa-icon icon="check"></fa-icon>
+                      </mat-icon>
+                      <span>{{ 'aw3s.proposals.filter.executed' | translate }}</span>
+                    </button>
+                    <button mat-menu-item (click)="onFilterProposals('ACTIVE')" [class.active]="(filter$ | async) === 'ACTIVE'">
+                      <mat-icon>
+                        <fa-icon icon="square"></fa-icon>
+                      </mat-icon>
+                      <span>{{ 'aw3s.proposals.filter.active' | translate }}</span>
+                    </button>
+                  </mat-menu>
+                  <mat-chip-list class="proposals-filter-info d-none d-sm-block d-md-none d-lg-block">
+                    <mat-chip [disabled]=true [ngPlural]="proposals.length">
+                      {{ 'aw3s.proposals.filter.description' | translate }}
+                      <ng-template ngPluralCase="other">{{ proposals.length }} {{ 'aw3s.proposals.filter.items' |
+                        translate }}</ng-template>
+                      <ng-template ngPluralCase="=1">{{ 'aw3s.proposals.filter.one' | translate }} {{
+                        'aw3s.proposals.filter.item' | translate }}</ng-template>
+                      <ng-template ngPluralCase="=0">{{ 'aw3s.proposals.filter.none' | translate }} {{
+                        'aw3s.proposals.filter.items' | translate }}</ng-template>
+                    </mat-chip>
+                  </mat-chip-list>
+                </h2>
+                <form #allocationsForm='ngForm' (ngSubmit)="updateMemberAllocations(allocationsForm.value)">
+                <mat-card [ngClass]="routeAnimationsElements">
+                  <mat-table [dataSource]="proposals">
+                    <ng-container matColumnDef="title">
+                      <mat-header-cell *matHeaderCellDef> Proposal </mat-header-cell>
+                      <mat-cell [matTooltip]="element.proposal" *matCellDef="let element"> {{element.title}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="allocation">
+                      <mat-header-cell *matHeaderCellDef> Allocation </mat-header-cell>
+                      <mat-cell *matCellDef="let element" class="editableCell">
+                        <input matInput [ngModel]="element.allocation" [name]="element.proposal">
+                      </mat-cell>
+                    </ng-container>   
+                    <ng-container matColumnDef="amount">
+                      <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.amount}} {{element.currency}}  </mat-cell>
+                    </ng-container>   
+                    <ng-container matColumnDef="totalConviction">
+                      <mat-header-cell *matHeaderCellDef> Total Conviction </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.totalConviction}}  </mat-cell>
+                    </ng-container>      
+                    <ng-container matColumnDef="owner">
+                      <mat-header-cell *matHeaderCellDef> Owner </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.owner}}  </mat-cell>
+                    </ng-container>                       
+                    <ng-container matColumnDef="triggered">
+                      <mat-header-cell *matHeaderCellDef> Triggered </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.triggered}}  </mat-cell>
+                    </ng-container>                                  
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+                </mat-card>
+                <mat-card-actions>
+                  <button mat-raised-button type="submit" color="primary">
+                    Save Member Allocations
+                  </button>
+                </mat-card-actions>
+                </form>
+                <br>
+                <br>
+              </div>
+          </ng-container>
+          <div class="col-md-6">
+            <h2 class="proposals-title" rtl>
+              <span>{{ 'aw3s.proposals.create' | translate }}</span>
+            </h2>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="row justify-content-center">
+                <div class="col">
+                  <mat-card>
+                    <div class="row">
+                      <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                        <input matInput placeholder="{{ 'aw3s.proposals.title' | translate }}"
+                          formControlName="title">
+                        <mat-error *ngIf="form.get('title').invalid">
+                          {{ 'aw3s.proposals.title' | translate }}
+                          {{ 'aw3s.proposals.title.error.required' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="row">
+                      <mat-form-field class="col-md-6" [ngClass]="routeAnimationsElements">
+                        <input matInput placeholder="{{ 'aw3s.proposals.amount' | translate }}"
+                          formControlName="amount">
+                        <mat-error *ngIf="form.get('amount').hasError('required')">
+                          {{ 'aw3s.proposals.amount' | translate }}
+                          {{ 'aw3s.proposals.amount.error.required' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="form.get('amount').hasError('min')">
+                          {{ 'aw3s.proposals.amount' | translate }}
+                          {{ 'aw3s.proposals.amount.error.min' | translate }} 1e-18
+                        </mat-error>
+                        <mat-error *ngIf="form.get('amount').hasError('pattern')">
+                          {{ 'aw3s.proposals.amount' | translate }}
+                          {{ 'aw3s.proposals.amount.error.number' | translate }}
+                        </mat-error>    
+                      </mat-form-field>
+                      <mat-form-field class="col-md-6" [ngClass]="routeAnimationsElements">
+                        <mat-select formControlName="currency">
+                          <mat-option *ngFor="let c of currencies" [value]="c">
+                            {{ c.toUpperCase() }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.get('currency').invalid">
+                          {{ 'aw3s.proposals.currency' | translate }}
+                          {{ 'aw3s.proposals.currency.error.required' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="row">
+                      <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                        <input matInput placeholder="{{ 'aw3s.proposals.beneficiary' | translate }}"
+                          formControlName="beneficiary">
+                        <mat-error *ngIf="form.get('beneficiary').hasError('required')">
+                          {{ 'aw3s.proposals.beneficiary' | translate }}
+                          {{ 'aw3s.proposals.beneficiary.error.required' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="form.get('beneficiary').hasError('pattern')">
+                          {{ 'aw3s.proposals.beneficiary' | translate }}
+                          {{ 'aw3s.proposals.beneficiary.error.ethaddr' | translate }}
+                        </mat-error>                        
+                      </mat-form-field>
+                    </div>
+                    <div class="row">
+                      <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                        <textarea matInput placeholder="{{ 'aw3s.proposals.description' | translate }}"
+                        formControlName="description" minlength="10" maxlength="1000" cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"></textarea>
+                      <mat-hint align="end">{{form.get('description').value?.length}} /
+                        1000</mat-hint>
+                        <mat-error *ngIf="form.get('description').hasError('required')">
+                          {{ 'aw3s.proposals.description' | translate }}
+                          {{ 'aw3s.proposals.description.error.required' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="form.get('description').hasError('minlength')">
+                          {{ 'aw3s.proposals.description' | translate }}
+                          {{ 'aw3s.proposals.description.error.min' | translate }} 10 characters
+                        </mat-error>
+                        <mat-error *ngIf="form.get('description').hasError('maxlength')">
+                          {{ 'aw3s.proposals.description' | translate }}
+                          {{ 'aw3s.proposals.description.error.max' | translate }} 1000 characters
+                        </mat-error>                        
+                      </mat-form-field>
+                    </div>
+                    <div class="row">
+                      <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                        <input matInput placeholder="{{ 'aw3s.proposals.url' | translate }}"
+                          formControlName="url">
+                        <mat-error *ngIf="form.get('url').hasError('required')">
+                          {{ 'aw3s.proposals.url' | translate }}
+                          {{ 'aw3s.proposals.url.error.required' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="form.get('url').hasError('pattern')">
+                          {{ 'aw3s.proposals.url' | translate }}
+                          {{ 'aw3s.proposals.url.error.url' | translate }}
+                        </mat-error>                            
+                      </mat-form-field>
+                    </div>
+                    <div class="row buttons d-flex justify-content-between pad">
+                      <button type="button" mat-raised-button color="accent"
+                        [ngClass]="routeAnimationsElements" [disabled]="!form.valid" (click)="submit()">
+                        {{ 'aw3s.proposals.save' | translate }}
+                      </button>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+            </form>
+          </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+</div>
+<div class="container" rtl>
+
+
+</div>
+  

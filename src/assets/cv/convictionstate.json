@@ -1,0 +1,26 @@
+{
+    "context": "eip155:1/erc20:0x6b175474...",
+    "supply": 9001,
+    "participants": [{
+      "account": "0x12345...",
+      "balance": 1337,
+      "convictions": "user1conviction"
+    }, {
+      "account": "0xabcde...",
+      "balance": 42,
+      "convictions": "user2conviction"
+    }],
+    "proposals": [{
+      "proposal": "proposal1",
+      "totalConviction": 234,
+      "triggered": false
+    }, {
+      "proposal": "proposal2",
+      "totalConviction": 432,
+      "triggered": false
+    }, {
+      "proposal": "proposal3",
+      "totalConviction": 100,
+      "triggered": true
+    }]
+  }

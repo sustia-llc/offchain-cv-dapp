@@ -1,0 +1,14 @@
+{
+    "context": "eip155:1/erc20:0x6b175474...",
+    "proposals": ["proposal1", "proposal3"],
+    "convictions": [{
+      "proposal": "proposal1",
+      "allocation": 0.2
+    }, {
+      "proposal": "proposal2",
+      "allocation": 0.5
+    }, {
+      "proposal": "proposal3",
+      "allocation": 0.3
+    }]
+  }

@@ -1,0 +1,10 @@
+{
+    "proposal": "proposal2",
+    "context": "eip155:1/erc20:0x6b175474...",
+    "title": "Develop an off-chain conviction voting system",
+    "currency": "ETH",
+    "amount": 200,
+    "beneficiary": "0xabcdef",
+    "description": "Fund team X to implement off-chain conviction voting using Ceramic & IDX.",
+    "url": "https://ceramic.network"
+}

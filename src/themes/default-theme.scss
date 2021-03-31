@@ -1,0 +1,5 @@
+$aw3s-primary: mat-palette($mat-indigo, 800, 300, 900);
+$aw3s-accent: mat-palette($mat-light-blue);
+$aw3s-warn: mat-palette($mat-pink, 600);
+
+$aw3s-theme: mat-light-theme($aw3s-primary, $aw3s-accent, $aw3s-warn);

@@ -1,0 +1,159 @@
+@import '../../../../styles-variables';
+
+.editableCell input.mat-input-element {
+  background-color: #BBBBBB;
+}
+
+mat-header-cell.mat-header-cell.cdk-header-cell.cdk-column-title.mat-column-title.ng-star-inserted {
+  flex: 0 0 30%;
+}
+
+mat-cell.mat-cell.cdk-cell.mat-tooltip-trigger.cdk-column-title.mat-column-title.ng-star-inserted {
+  flex: 0 0 30%;
+}
+
+.entry {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.proposals-filter-info {
+  float: right;
+  font-weight: normal;
+}
+
+.proposals-title {
+  display: flex;
+  > span {
+    flex: 1;
+  }
+}
+
+.proposals-filter {
+  float: right;
+  position: relative;
+  left: 10px;
+  top: -5px;
+  margin-left: -10px;
+}
+
+.proposal {
+  display: flex;
+  margin-bottom: 10px;
+
+  .proposal-done {
+    margin: 0 20px 0 0;
+  }
+
+  .proposal-label {
+    position: relative;
+    top: 2px;
+    cursor: pointer;
+
+    &.proposal-label-done {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+  }
+}
+
+
+h1 {
+  text-align: center;
+  font-size: 3em;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+
+.background {
+  padding: 80px 0 0 0;
+  position: relative;
+
+  .actions {
+    text-align: center;
+    margin: 50px;
+    z-index: 1;
+
+    span {
+      display: inline-block;
+      font-weight: bold;
+      padding: 20px 10px 30px 10px;
+    }
+
+    a {
+      margin: 0 5px 10px 0;
+
+      &.actions-main {
+        text-transform: uppercase;
+        padding: 3px 24px;
+      }
+
+      fa-icon {
+        position: relative;
+        bottom: 1px;
+      }
+    }
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-size: cover;
+    opacity: 0.7;
+    content: '';
+    z-index: 0;
+  }
+
+  .gradient {
+    &::before {
+      position: absolute;
+      top: 51%;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      content: '';
+      z-index: 0;
+    }
+  }
+
+  .container {
+    position: relative;
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, md)) {
+  .background {
+    .actions {
+      margin: 50px 0;
+    }
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .background {
+    padding: 40px 0 0 0;
+
+    h1 {
+      line-height: 1em;
+    }
+
+    .actions {
+      margin: 40px 0 0 0;
+
+      span {
+        padding: 10px 0 20px 0;
+      }
+
+      a {
+        width: 100%;
+      }
+    }
+  }
+}

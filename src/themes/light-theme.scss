@@ -1,0 +1,9 @@
+$aw3s-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$aw3s-light-accent: mat-palette($mat-brown, 200);
+$aw3s-light-warn: mat-palette($mat-deep-orange, 200);
+
+$aw3s-light-theme: mat-light-theme(
+  $aw3s-light-primary,
+  $aw3s-light-accent,
+  $aw3s-light-warn
+);

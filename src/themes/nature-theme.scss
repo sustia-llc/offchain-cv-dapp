@@ -1,0 +1,9 @@
+$aw3s-nature-primary: mat-palette($mat-brown, 700, 300, 900);
+$aw3s-nature-accent: mat-palette($mat-deep-purple, 300);
+$aw3s-nature-warn: mat-palette($mat-red, 600);
+
+$aw3s-nature-theme: mat-light-theme(
+  $aw3s-nature-primary,
+  $aw3s-nature-accent,
+  $aw3s-nature-warn
+);
