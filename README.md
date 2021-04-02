@@ -1,7 +1,7 @@
 
 # Off-chain Conviction Voting
 
-Submission to GitCion GR9 Hackathon
+Submission to GitCoin GR9 Hackathon
 
 An off-chain implementation of Conviction Voting where organization members can vote on proposals by allocating a percentage of their tokens to the proposal. Conviction is calculated with a snapshot service that runs regularly. Instead of staking tokens, it is implemented using off-chain, verifiable data structures managed by Ceramic and IDX.
 
