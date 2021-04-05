@@ -1,11 +1,11 @@
 import { InjectionToken} from '@angular/core';
-import CeramicClient from '@ceramicnetwork/http-client';
+import Ceramic from '@ceramicnetwork/http-client';
 import { environment as env } from '../../../../environments/environment';
 
-export const CeramicToken = new InjectionToken<CeramicClient>(
+export const CeramicToken = new InjectionToken<Ceramic>(
     'Ceramic',
     {
         providedIn: 'root',
-        factory: () => new CeramicClient(env.ceramicApiHost)
+        factory: () => new Ceramic(env.ceramicApiHost)
     }
 );

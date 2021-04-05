@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 
+// import CeramicApi from '@ceramicnetwork/http-client';
 import type { CeramicApi } from '@ceramicnetwork/common'
+
 import { IDX } from '@ceramicstudio/idx';
 import type { DIDProvider } from 'dids'
 
@@ -8,7 +10,7 @@ import Authereum from 'authereum'
 import Fortmatic from 'fortmatic'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/3id-provider'
-import { ThreeIdConnect, EthereumAuthProvider } from '3id-connect'
+import { ThreeIdConnect, EthereumAuthProvider, DidProviderProxy } from '3id-connect'
 
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
@@ -63,14 +65,17 @@ export class IdxProviderService {
   async getProvider(): Promise<any> {
     const ethProvider = await web3Modal.connect();
     const addresses = await ethProvider.enable();
-    await this.threeIdConnect.connect(new EthereumAuthProvider(ethProvider, addresses[0]));
-    return this.threeIdConnect.getDidProvider();
+    const authProvider = new EthereumAuthProvider(ethProvider, addresses[0]);
+    await this.threeIdConnect.connect(authProvider);
+    const didProvider = await this.threeIdConnect.getDidProvider();
+    return didProvider;
   }
 
   async authenticateDID(): Promise<string> {
-    const [provider] = await Promise.all([this.getProvider()]);
+    const provider = await this.getProvider();
+    console.log("before setDIDProvider  ");
     await this.ceramic.setDIDProvider(provider);
-
+    console.log("after setDIDProvider  ");
     const idx = new IDX({ ceramic: this.ceramic, aliases: definitions });
     this.idxWrapper.value = idx;
     return (this.idxWrapper.value.id);
