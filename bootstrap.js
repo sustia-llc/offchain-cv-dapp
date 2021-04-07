@@ -6,8 +6,9 @@ const fromString = require('uint8arrays/from-string')
 
 // const CERAMIC_URL = 'http://localhost:7007';
 const CERAMIC_URL = 'https://ceramic-clay.3boxlabs.com';
-//TODO: update with real contract address
-const contractAddress = '0x89809eFf0F1DC160830C1Ee877ba7D107cAb8E8e'
+
+// contract on rinkeby
+const contractAddress = '0x26129f690d76480c130383ce85cda0340eee8dee'
 
 const ProposalSchema = {
   $schema: 'http://json-schema.org/draft-07/schema#',
