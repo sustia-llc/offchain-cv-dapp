@@ -55,7 +55,10 @@ run to create seed for IDX identity:
 ```
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
-run:
+### Save the seed value, you will need it to initialize snapshot service:
+https://github.com/dynamiculture/offchain-cv-contract
+
+then run:
 ```
 SEED=<your seed from above> npm run bootstrap
 ```
